@@ -1,0 +1,33 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+.project {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-description-wrapper {
+    margin: 0;
+}
+
+.project-description {
+    margin: 0;
+}
+
+footer {
+    font-size: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+.github-link {
+    width: 1rem;
+    margin-left: 5px;
+}
