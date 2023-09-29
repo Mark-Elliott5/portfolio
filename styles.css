@@ -4,7 +4,8 @@
 }
 
 html, body {
-    height: 100vh,
+    height: 100vh;
+    width: 100vw;
 }
 body {
     background-color: black;
@@ -17,6 +18,23 @@ header {
     width:0;
     white-space: nowrap;
 }
+
+#background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* min-width: 100vw;
+    min-height: 100vh; */
+    z-index: -1;
+} 
+
+svg {
+    /* z-index: -1; */
+}
+
+text {
+    color: var(--green-color);
+} 
 
 /* #name {
     width: 100%;
@@ -58,6 +76,7 @@ main {
     aspect-ratio: 1;
     opacity: 0;
     transform: translateY(500px);
+    background-color: black;
 }
 
 /* .project:hover {
