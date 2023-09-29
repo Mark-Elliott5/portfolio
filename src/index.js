@@ -43,3 +43,61 @@ for (let i = 0; i < projects.length; i += 1) {
       'perspective(400px) rotateX(0deg) rotateY(0deg)';
   });
 }
+
+// function generateBinaryString() {
+//   const length = window.innerWidth;
+//   let string = '';
+//   for (let i = 0; i < length; i += 1) {
+//     const randomInt = Math.floor(Math.random() * 2);
+//     string += randomInt;
+//   }
+//   return string;
+// }
+
+function newGenerateBinaryString() {
+  const spaces = Math.floor(window.innerWidth / 4.8);
+  const length = spaces / 2;
+  let string = '';
+  const randomPercent = (Math.random() * 99) / 100;
+  const newStringLength = Math.floor(randomPercent * length) + 5;
+  for (let i = 0; i < newStringLength; i += 1) {
+    const randomInt = Math.floor(Math.random() * 2);
+    string += `${randomInt}`;
+  }
+  const stringMidpoint = Math.floor(string.length / 2);
+  const remainingSpaceLength = spaces - newStringLength;
+  let newString = '';
+  const repeatedString = ` `.repeat(remainingSpaceLength);
+  newString += string.slice(0, stringMidpoint);
+  newString += repeatedString;
+  newString += string.slice(stringMidpoint);
+  return newString;
+}
+
+function updateBackground() {
+  const svg = document.getElementById('background-svg');
+  svg.replaceChildren();
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  svg.setAttribute('width', `${window.innerWidth}`);
+  svg.setAttribute('height', `${window.innerHeight}`);
+  for (let i = 1; i < height + 1; i += 8) {
+    const textElem = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'text'
+    );
+    textElem.setAttribute('x', '1');
+    textElem.setAttribute('y', i);
+    textElem.setAttribute(
+      'style',
+      'font-size: 8px; white-space: pre; text-wrap: nowrap; fill: var(--green-color); white-space: pre;'
+    );
+    textElem.textContent = newGenerateBinaryString();
+    svg.append(textElem);
+  }
+}
+
+window.addEventListener('resize', updateBackground);
+
+updateBackground();
