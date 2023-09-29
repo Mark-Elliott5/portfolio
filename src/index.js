@@ -30,12 +30,12 @@ function addPerspectiveWarping() {
       const mouseX = e.clientX - centerX;
       const mouseY = e.clientY - centerY;
 
-      const tiltX = (mouseY / centerY) * 10; // Adjust the tilt sensitivity
-      const tiltY = -(mouseX / centerX) * 10; // Adjust the tilt sensitivity
+      const tiltX = (mouseY / centerY) * 20;
+      const tiltY = -(mouseX / centerX) * 20;
 
       projects[
         i
-      ].style.transform = `perspective(400px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      ].style.transform = `perspective(400px) rotateX(${-tiltX}deg) rotateY(${-tiltY}deg)`;
     });
     projects[i].addEventListener('mouseleave', () => {
       projects[i].style.transform =
@@ -65,17 +65,6 @@ function generateBinaryString() {
   return newString;
 }
 
-const colorsClasses = ['amber-color', 'green-color'];
-
-const blinkingUnderscore = document.getElementById('blinking-underscore');
-blinkingUnderscore.addEventListener('click', () => {
-  const currentColor = colorsClasses.shift();
-  const root = document.querySelector(':root');
-  root.classList = '';
-  root.classList.add(currentColor);
-  colorsClasses.push(currentColor);
-});
-
 function generateBackground() {
   const svg = document.getElementById('background-svg');
   svg.replaceChildren();
@@ -104,21 +93,33 @@ function updateBackground() {
   const textElems = Array.from(
     document.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'text')
   );
-  const prevValue = textElems[0].getAttribute('y');
   for (let i = 0; i < textElems.length; i += 1) {
-    const nextElem = i + 1;
-    if (nextElem === textElems.length) {
-      textElems[i].setAttribute('y', prevValue);
-      break;
+    const yValue = parseInt(textElems[i].getAttribute('y'), 10);
+    if (yValue <= window.innerHeight + 1) {
+      textElems[i].setAttribute('y', yValue + 1);
+    } else {
+      textElems[i].textContent = generateBinaryString();
+      textElems[i].setAttribute('y', '0');
     }
-    textElems[i].setAttribute('y', textElems[nextElem].getAttribute('y'));
   }
-  const intervalTime = 50;
+  const intervalTime = 25;
   setTimeout(updateBackground, intervalTime);
 }
 
-addPerspectiveWarping();
-generateBackground();
+function pageSetup() {
+  generateBackground();
+  addPerspectiveWarping();
+  const colorsClasses = ['amber-color', 'green-color'];
+  const blinkingUnderscore = document.getElementById('blinking-underscore');
+  blinkingUnderscore.addEventListener('click', () => {
+    const currentColor = colorsClasses.shift();
+    const root = document.querySelector(':root');
+    root.classList = '';
+    root.classList.add(currentColor);
+    colorsClasses.push(currentColor);
+  });
+  updateBackground();
+  window.addEventListener('resize', generateBackground);
+}
 
-window.addEventListener('resize', generateBackground);
-updateBackground();
+pageSetup();
