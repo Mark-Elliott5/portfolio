@@ -38,7 +38,6 @@ for (let i = 0; i < projects.length; i += 1) {
     ].style.transform = `perspective(400px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
   });
   projects[i].addEventListener('mouseleave', () => {
-    console.log('event emitted 2');
     projects[i].style.transform =
       'perspective(400px) rotateX(0deg) rotateY(0deg)';
   });
@@ -56,7 +55,7 @@ for (let i = 0; i < projects.length; i += 1) {
 
 function newGenerateBinaryString() {
   const spaces = Math.floor(window.innerWidth / 4.8);
-  const length = spaces / 2;
+  const length = spaces / 4;
   let string = '';
   const randomPercent = (Math.random() * 99) / 100;
   const newStringLength = Math.floor(randomPercent * length) + 5;
@@ -73,6 +72,17 @@ function newGenerateBinaryString() {
   newString += string.slice(stringMidpoint);
   return newString;
 }
+
+const colorsClasses = ['green-color', 'amber-color'];
+
+const blinkingUnderscore = document.getElementById('blinking-underscore');
+blinkingUnderscore.addEventListener('click', () => {
+  const currentColor = colorsClasses.shift();
+  const root = document.querySelector(':root');
+  root.classList = '';
+  root.classList.add(currentColor);
+  colorsClasses.push(currentColor);
+});
 
 function updateBackground() {
   const svg = document.getElementById('background-svg');
@@ -91,13 +101,13 @@ function updateBackground() {
     textElem.setAttribute('y', i);
     textElem.setAttribute(
       'style',
-      'font-size: 8px; white-space: pre; text-wrap: nowrap; fill: var(--green-color); white-space: pre;'
+      `font-size: 8px; white-space: pre; text-wrap: nowrap; fill: var(--main-color); white-space: pre;`
     );
     textElem.textContent = newGenerateBinaryString();
     svg.append(textElem);
   }
+  const intervalTime = 500;
+  setTimeout(updateBackground, intervalTime);
 }
-
-window.addEventListener('resize', updateBackground);
 
 updateBackground();
