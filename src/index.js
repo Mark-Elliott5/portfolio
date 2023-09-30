@@ -82,7 +82,7 @@ function generateBackground() {
     textElem.setAttribute('y', i);
     textElem.setAttribute(
       'style',
-      `font-size: 8px; white-space: pre; text-wrap: nowrap; fill: var(--main-color); white-space: pre;`
+      `font-size: 8px; fill: var(--main-color); white-space: pre;`
     );
     textElem.textContent = generateBinaryString();
     svg.append(textElem);
@@ -94,16 +94,28 @@ function updateBackground() {
     document.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'text')
   );
   for (let i = 0; i < textElems.length; i += 1) {
+    // background text flicker effect:
+    // textElems[i].setAttribute(
+    //   'style',
+    //   `font-size: 8px; fill: rgb(55,${
+    //     255 - Math.floor(Math.random() * 30)
+    //   },0); white-space: pre;`
+    // );
+    // better bg text flicker effect:
+    // textElems[i].setAttribute(
+    //   'opacity',
+    //   `${(90 + Math.floor(Math.random() * 10)) / 100}`
+    // );
     const yValue = parseInt(textElems[i].getAttribute('y'), 10);
     if (yValue <= window.innerHeight + 1) {
       textElems[i].setAttribute('y', yValue + 1);
     } else {
+      // when text goes off window, give it a new string then move it to top
       textElems[i].textContent = generateBinaryString();
       textElems[i].setAttribute('y', '0');
     }
   }
-  const intervalTime = 25;
-  setTimeout(updateBackground, intervalTime);
+  setTimeout(updateBackground, 25);
 }
 
 function pageSetup() {
