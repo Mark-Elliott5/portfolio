@@ -95,7 +95,9 @@ a {
     .project-description {
         font-size: calc(8px + 1vw);
     }
+}
 
+@media (hover: none) {
     .project {
         transform: none !important;
     }
