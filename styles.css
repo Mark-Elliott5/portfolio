@@ -95,4 +95,8 @@ a {
     .project-description {
         font-size: calc(8px + 1vw);
     }
+
+    .project {
+        transform: none !important;
+    }
 }
