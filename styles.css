@@ -18,30 +18,25 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 
-header {
-    font-size: calc(50px + 1vw);
-    width:0;
-    white-space: nowrap;
+#name {
+    font-size: 8vw;
+}
+
+#blinking-underscore {
+    font-size: 9vw;
 }
 
 #background-container {
     position: fixed;
     top: 0;
     left: 0;
-    /* min-width: 100vw;
-    min-height: 100vh; */
     z-index: -1;
     filter: blur(0.8px);
-}
-
-#blinking-underscore {
-    font-size: calc(56px + 1vw);
 }
 
 main {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin: 0px 100px;
     align-items: center;
     justify-items: center;
 }
@@ -75,6 +70,7 @@ img.project-preview {
     padding: 4px;
     border-top: 2px solid var(--main-color);
     user-select: none;
+    font-size: calc(12px + 0.5vw);
 }
 
 footer {
@@ -91,6 +87,12 @@ a {
     margin-left: 5px;
 }
 
-@media screen {
-    
+@media (max-width: 500px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    .project-description {
+        font-size: calc(8px + 1vw);
+    }
 }
